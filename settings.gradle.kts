@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "TryProgger"
+rootProject.name = "Android_Coffee_PryStore"
 include(":app")
  
