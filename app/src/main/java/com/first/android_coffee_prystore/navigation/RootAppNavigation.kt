@@ -1,5 +1,7 @@
 package com.first.android_coffee_prystore.navigation
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -8,7 +10,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.first.android_coffee_prystore.pages.app.main.MainScreen
 import com.first.android_coffee_prystore.pages.app.sign_in.SignInScreen
 import com.first.android_coffee_prystore.pages.app.sign_in.SignInViewModel
 import com.first.android_coffee_prystore.pages.app.sign_up.SignUpScreen
@@ -18,6 +19,10 @@ import com.first.android_coffee_prystore.pages.app.splash.SplashViewModel
 import com.first.android_coffee_prystore.pages.app.welcome.WelcomeScreen
 import com.first.android_coffee_prystore.pages.app.welcome.WelcomeViewModel
 
+
+fun appToastShow(context: Context, message: String) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
 
 @Composable
 fun RootAppNavigation (
@@ -45,39 +50,44 @@ fun RootAppNavigation (
             val viewModel = hiltViewModel<WelcomeViewModel>()
             WelcomeScreen(
                 viewModel = viewModel,
-                onNavigateToSignIn = {
-                    navController.navigate(route = Routes.SignIn.route)
-                },
-                onNavogateToSignUp = {
-                    navController.navigate(route = Routes.SignUp.route)
-                },
+                onNavigateToSignIn = { navController.navigate(Routes.SignIn.route) },
+                onNavigateToSignUp = { navController.navigate(Routes.SignUp.route) }
             )
         }
 
+
         composable(Routes.SignIn.route) {
             val viewModel = hiltViewModel<SignInViewModel>()
+            val context = LocalContext.current
             SignInScreen(
                 viewModel = viewModel,
-                onBackClick = {navController.popBackStack()},
-                onForgotPasswordClick = {appToastShow("onForgotPasswordClick", ctx)},
-                onLoginClick = {appToastShow("Success", ctx)},
-                onLoginGoogleClick = {appToastShow("onLoginGoogleClick", ctx)},
-                onRegisterClick = {navController.navigate(route = Routes.SignUp.route)},
+                onNavigationNext = { navController.navigate(Routes.Main.route) },
+                onBackClick = { navController.popBackStack() },
+                onTermsConditionsClick = { appToastShow(context, "Terms and Conditions clicked") },
+                privacyPolicyOnClick = { appToastShow(context, "Privacy Policy clicked") }
             )
+
+
         }
 
         composable(Routes.SignUp.route) {
             val viewModel = hiltViewModel<SignUpViewModel>()
+            val context = LocalContext.current
             SignUpScreen(
                 viewModel = viewModel,
-                onNextClick = {appToastShow("onNextClick", ctx)},
-                onBackClick = {navController.popBackStack()},
-                onTermsConditionsClick = {appToastShow("onTermsConditionsClick", ctx)},
-                privacyPolicyOnClick = {appToastShow("privacyPolicyOnClick", ctx)},
+                onNavigationNext = { navController.navigate(Routes.Main.route) },
+                onBackClick = { navController.popBackStack() },
+                onTermsConditionsClick = { appToastShow(context, "Terms and Conditions clicked") },
+                privacyPolicyOnClick = { appToastShow(context, "Privacy Policy clicked") }
             )
         }
+
+
 
         composable(Routes.Main.route) {
             // TBD.
         }
     }
+
+
+}

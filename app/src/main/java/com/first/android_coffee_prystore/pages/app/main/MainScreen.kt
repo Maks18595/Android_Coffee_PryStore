@@ -81,7 +81,7 @@ NestedAppNavigation(
     startDestination = Routes.Feed.route,
     modifier = Modifier
         .fillMaxSize()
-        .padding(buttom = it.calculateBottomPadding())
+        .padding(bottom = it.calculateBottomPadding())
 )
     }
 }

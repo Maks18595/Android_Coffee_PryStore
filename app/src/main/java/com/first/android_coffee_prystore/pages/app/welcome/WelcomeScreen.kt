@@ -16,18 +16,40 @@ import com.first.android_coffee_prystore.ui.theme.PurpleGrey40
 @Composable
 fun WelcomeScreen(
     viewModel: WelcomeViewModel,
-    onNavigationNext: () -> Unit
+    onNavigateToSignIn: () -> Unit,
+    onNavigateToSignUp: () -> Unit
 ) {
     Scaffold(
         topBar = { TopBar() },
         content = {
             WelcomeScreenContent(
                 modifier = Modifier.padding(it),
-                onNavigationNext = onNavigationNext
+                onNavigateToSignIn = onNavigateToSignIn,
+                onNavigateToSignUp = onNavigateToSignUp
             )
         }
     )
 }
+
+@Composable
+private fun WelcomeScreenContent(
+    modifier: Modifier,
+    onNavigateToSignIn: () -> Unit,
+    onNavigateToSignUp: () -> Unit
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = "Sign In",
+            modifier = Modifier.clickable { onNavigateToSignIn() }
+        )
+        Text(
+            text = "Sign Up",
+            modifier = Modifier.clickable { onNavigateToSignUp() }
+        )
+    }
+}
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,19 +65,3 @@ private fun TopBar(){
     )
 }
 
-@Composable
-private fun WelcomeScreenContent(
-    modifier: Modifier,
-    onNavigationNext: () -> Unit
-) {
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            text = "Welcome screen",
-            modifier = modifier.clickable{
-                onNavigationNext.invoke()
-            }
-        )
-    }
-}

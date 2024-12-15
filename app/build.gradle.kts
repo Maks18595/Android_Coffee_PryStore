@@ -70,6 +70,10 @@ dependencies {
 
     implementation(libs.hilt.android.core)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.benchmark.common)
+    implementation(libs.firebase.vertexai)
+    implementation(libs.play.services.analytics.impl)
+    implementation(libs.androidx.ui.desktop)
 
     // Hilt compiler
     kapt(libs.hilt.compiler) // Add this line for annotation processing

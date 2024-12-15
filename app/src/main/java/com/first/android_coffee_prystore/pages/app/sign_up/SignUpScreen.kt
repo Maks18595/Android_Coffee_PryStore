@@ -16,18 +16,25 @@ import com.first.android_coffee_prystore.ui.theme.PurpleGrey40
 @Composable
 fun SignUpScreen(
     viewModel: SignUpViewModel,
-    onNavigationNext: () -> Unit
+    onNavigationNext: () -> Unit,
+    onBackClick: () -> Unit,
+    onTermsConditionsClick: () -> Unit,
+    privacyPolicyOnClick: () -> Unit
 ) {
     Scaffold(
         topBar = { TopBar() },
         content = {
             SignUpScreenContent(
                 modifier = Modifier.padding(it),
-                onNavigationNext = onNavigationNext
+                onNavigationNext = onNavigationNext,
+                onBackClick = onBackClick,
+                onTermsConditionsClick = onTermsConditionsClick,
+                privacyPolicyOnClick = privacyPolicyOnClick
             )
         }
     )
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -46,16 +53,29 @@ private fun TopBar(){
 @Composable
 private fun SignUpScreenContent(
     modifier: Modifier,
-    onNavigationNext: () -> Unit
+    onNavigationNext: () -> Unit,
+    onBackClick: () -> Unit,
+    onTermsConditionsClick: () -> Unit,
+    privacyPolicyOnClick: () -> Unit
 ) {
     Column(
         modifier = modifier
     ) {
         Text(
             text = "SignUp screen",
-            modifier = modifier.clickable{
-                onNavigationNext.invoke()
-            }
+            modifier = Modifier.clickable { onNavigationNext() }
+        )
+        Text(
+            text = "Back",
+            modifier = Modifier.clickable { onBackClick() }
+        )
+        Text(
+            text = "Terms & Conditions",
+            modifier = Modifier.clickable { onTermsConditionsClick() }
+        )
+        Text(
+            text = "Privacy Policy",
+            modifier = Modifier.clickable { privacyPolicyOnClick() }
         )
     }
 }
