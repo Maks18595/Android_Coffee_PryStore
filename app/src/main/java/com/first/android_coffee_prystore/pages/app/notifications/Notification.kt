@@ -7,3 +7,5 @@ data class Notification(
     val description: String,
     val isNew: Boolean,
 )
+
+

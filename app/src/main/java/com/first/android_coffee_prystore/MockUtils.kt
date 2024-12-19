@@ -81,6 +81,14 @@ object MockUtils {
         )
 
     }
+
+    fun loadMockProducts() {
+        TODO("Not yet implemented")
+    }
+
+    fun loadMockSearchCategories(): List<String> {
+        TODO("Not yet implemented")
+    }
 }
 /*
     fun loadMockProducts(): List<Product> {

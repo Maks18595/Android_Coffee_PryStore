@@ -1,47 +1,58 @@
 package com.first.android_coffee_prystore.pages.app.notifications
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
+import coil.compose.rememberAsyncImagePainter
 import com.first.android_coffee_prystore.BaseContentLayout
 import com.first.android_coffee_prystore.MockUtils
-import com.first.android_coffee_prystore.R
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 
+
+//import android.graphics.Color
 
 @Composable
 fun NotificationsScreen(
     viewModel: NotificationsViewModel,
     onBackClick: () -> Unit,
 ) {
-    LaunchedEffect(key1 = Unit) {
+    // Завантаження даних при створенні екрану
+    LaunchedEffect(Unit) {
         viewModel.handleUiEvent(NotificationsUiEvent.LoadScreenData)
     }
-    BaseContentLayout(viewModel = viewModel) { uiState ->
+
+    // Отримання стану UI
+    val uiState by viewModel.uiState
+
+    BaseContentLayout(onBackPressed = onBackClick) {
         uiState?.let {
             NotificationsScreenContent(
                 notifications = it.notifications,
@@ -52,39 +63,33 @@ fun NotificationsScreen(
     }
 }
 
-
-
 @Composable
 private fun NotificationsScreenContent(
-    notifications: List<com.first.android_coffee_prystore.pages.app.notifications.Notification>,
-    onBackClick: () -> Unit,
-    uiEvent: (NotificationsUiEvent) -> Unit
+    notifications: List<Notification>,
+    uiEvent: (NotificationsUiEvent) -> Unit,
+    onBackClick: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        TopAppBar(
-            title = stringResource(id = R.string.notifications),
-            onBackClick = onBackClick
-        )
+        // Список повідомлень
         LazyColumn(
-            modifier = Modifier.padding(8.dp),
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(
+                top = 8.dp,
+                bottom = 16.dp
+            )
         ) {
-items(notifications){
-    notification ->
-    NotificationCard(notification, uiEvent)
-}
+            items(notifications) { notification ->
+                NotificationCard(notification, uiEvent)
+            }
         }
     }
 }
 
-
-
-
 @Composable
 private fun NotificationCard(
     notification: Notification,
-    uiEvent: (NotificationsUiEvent) -> Unit)
-{
+    uiEvent: (NotificationsUiEvent) -> Unit
+) {
     Card(
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
@@ -92,53 +97,62 @@ private fun NotificationCard(
         ),
         elevation = CardDefaults.cardElevation(2.dp),
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(horizontal = 16.dp)
-
-    ){
-        Box(contentAlignment = Alignment.TopEnd){
-            Row {
-
-            }
-            Text(text = notification.title)
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopAppBar(
-    title: String,
-    onBackClick: () -> Unit = {},
-    isEnabledBackIcon: Boolean = true
-) {
-    TopAppBar(
-        title = {
-            Text(
-                text = title,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                color = androidx.compose.ui.graphics.Color.White
-            )
-        },
-        navigationIcon = {
-            if (isEnabledBackIcon) {
-                IconButton(onClick = onBackClick) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Back button",
-                        tint = androidx.compose.ui.graphics.Color.White
+    ) {
+        Box(contentAlignment = Alignment.TopEnd) {
+            Row(
+                modifier = Modifier
+                    .animateContentSize()
+                    .clickable {
+                        uiEvent(NotificationsUiEvent.OnMarkAsReadClick(notification.id))
+                    }
+                    .padding(8.dp)
+            ) {
+                Image(
+                    painter = rememberAsyncImagePainter(notification.image),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(64.dp)
+                        .clip(CircleShape)
+                        .align(Alignment.CenterVertically)
+                )
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.Top)
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text(
+                        text = notification.title,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = Color.Black,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
+                    Text(
+                        text = notification.description,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = Color.Black,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 3
                     )
                 }
             }
-        },
-        colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
-            containerColor = androidx.compose.ui.graphics.Color(0xFF6200EE)
-        )
-    )
+            if (notification.isNew) {
+                Canvas(
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .size(10.dp),
+                    onDraw = {
+                        drawCircle(color = Color.Gray)
+                    }
+                )
+            }
+        }
+    }
 }
-
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -148,5 +162,4 @@ fun NotificationsScreenContentPreview() {
         onBackClick = {},
         uiEvent = {}
     )
-
 }

@@ -78,7 +78,8 @@ fun RootAppNavigation (
                 onNavigationNext = { navController.navigate(Routes.Main.route) },
                 onBackClick = { navController.popBackStack() },
                 onTermsConditionsClick = { appToastShow(context, "Terms and Conditions clicked") },
-                privacyPolicyOnClick = { appToastShow(context, "Privacy Policy clicked") }
+                privacyPolicyOnClick = { appToastShow(context, "Privacy Policy clicked") },
+
             )
         }
 

@@ -6,38 +6,30 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
+
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
-import perfetto.protos.UiState
-import com.first.android_coffee_prystore.BaseViewModel
 
 
 @Composable
-fun <S : AppUiState, P : Progress, D : Dialog, C : Callback> BaseContentLayout(
-    viewModel: BaseViewModel<S, P, D, C>,
-    onBackPressed: (() -> Unit)? = null,
-    content: @Composable (uiState: S?) -> Unit
+fun BaseContentLayout(
+    onBackPressed: (() -> Unit)?,
+    content: @Composable () -> Unit
 ) {
-    BackHandler(enabled = onBackPressed != null) {
-        onBackPressed?.invoke()
+    // Handle back press if provided
+    if (onBackPressed != null) {
+        BackHandler {
+            onBackPressed()
+        }
     }
 
-    val uiState by viewModel.uiState
-    val eventState by viewModel.eventState
-
+    // Main layout container with content
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        content(uiState)
+        content() // Display content passed to this composable
     }
 }
-
-

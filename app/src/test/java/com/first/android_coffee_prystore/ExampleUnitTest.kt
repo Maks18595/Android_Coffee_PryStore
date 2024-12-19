@@ -1,6 +1,6 @@
 package com.first.android_coffee_prystore
 
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 import org.junit.Assert.*
 
