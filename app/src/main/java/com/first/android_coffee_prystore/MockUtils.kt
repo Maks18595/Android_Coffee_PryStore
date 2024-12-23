@@ -89,6 +89,14 @@ object MockUtils {
     fun loadMockSearchCategories(): List<String> {
         TODO("Not yet implemented")
     }
+
+    fun loadMockProductsDetails(id: Long) {
+
+    }
+
+    fun isProductInCart(id: Long) {
+
+    }
 }
 /*
     fun loadMockProducts(): List<Product> {

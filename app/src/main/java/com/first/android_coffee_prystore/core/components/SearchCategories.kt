@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.draw.clip
@@ -23,11 +22,12 @@ import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun SearchCategories(
-    tags: List<String>,
+    tags: () -> Unit,
     modifier: Modifier = Modifier,
 ){
     LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier
     ) {
         items(tags) {
             SearchTag(tag = it)
@@ -64,5 +64,13 @@ fun SearchTag(tag: String){
 private fun SearchCategoriesPreview(){
     SearchCategories(
         tags = MockUtils.loadMockSearchCategories()
+    )
+}
+
+@Preview(showSystemUi = true)
+@Composable
+private fun SearchCategoryPreview(){
+    SearchTag(
+        tag = "All"
     )
 }

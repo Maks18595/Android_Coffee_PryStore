@@ -72,6 +72,10 @@ material3Android = "1.2.1"
 pagerIndicator = "0.30.1"
 benchmarkCommon = "1.3.3"
 playServicesAnalyticsImplVersion = "18.2.0"
+storage = "1.4.2"
+composeMaterial = "1.4.0"
+materialAndroid = "1.6.0"
+uiTestAndroid = "1.7.0"
 
 
 [libraries]
@@ -163,6 +167,10 @@ kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-pl
 preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 androidx-benchmark-common = { group = "androidx.benchmark", name = "benchmark-common", version.ref = "benchmarkCommon" }
 play-services-analytics-impl = { group = "com.google.android.gms", name = "play-services-analytics-impl", version.ref = "playServicesAnalyticsImplVersion" }
+androidx-storage = { group = "androidx.test.services", name = "storage", version.ref = "storage" }
+androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
+androidx-material-android = { group = "androidx.compose.material", name = "material-android", version.ref = "materialAndroid" }
+androidx-ui-test-android = { group = "androidx.compose.ui", name = "ui-test-android", version.ref = "uiTestAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

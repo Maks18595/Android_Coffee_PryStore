@@ -25,7 +25,7 @@ import com.first.android_coffee_prystore.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
-    title: String? = null,
+    title: @Composable String? = null,
     onBackClick: (() -> Unit)? = null,
     menuIcon: ImageVector? = null,
     onMenuClick: () -> Unit = {}

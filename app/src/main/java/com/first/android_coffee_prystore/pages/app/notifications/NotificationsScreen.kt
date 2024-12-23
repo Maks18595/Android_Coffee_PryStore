@@ -52,7 +52,7 @@ fun NotificationsScreen(
     // Отримання стану UI
     val uiState by viewModel.uiState
 
-    BaseContentLayout(onBackPressed = onBackClick) {
+    BaseContentLayout(onBackPressed = onBackClick, {
         uiState?.let {
             NotificationsScreenContent(
                 notifications = it.notifications,
@@ -60,7 +60,7 @@ fun NotificationsScreen(
                 uiEvent = viewModel::handleUiEvent
             )
         }
-    }
+    }, viewModel)
 }
 
 @Composable

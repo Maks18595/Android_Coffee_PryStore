@@ -10,6 +10,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.wear.compose.material.dialog.Confirmation
+import com.first.android_coffee_prystore.confirm.ConfirmScreen
+import com.first.android_coffee_prystore.confirm.ConfirmViewModel
+import com.first.android_coffee_prystore.pages.app.cart.CartScreen
+import com.first.android_coffee_prystore.pages.app.cart.CartViewModel
+import com.first.android_coffee_prystore.pages.app.main.MainScreen
 import com.first.android_coffee_prystore.pages.app.sign_in.SignInScreen
 import com.first.android_coffee_prystore.pages.app.sign_in.SignInViewModel
 import com.first.android_coffee_prystore.pages.app.sign_up.SignUpScreen
@@ -18,6 +24,8 @@ import com.first.android_coffee_prystore.pages.app.splash.SplashScreen
 import com.first.android_coffee_prystore.pages.app.splash.SplashViewModel
 import com.first.android_coffee_prystore.pages.app.welcome.WelcomeScreen
 import com.first.android_coffee_prystore.pages.app.welcome.WelcomeViewModel
+import com.first.android_coffee_prystore.prototype.ProductScreen
+import com.first.android_coffee_prystore.prototype.ProductViewModel
 
 
 fun appToastShow(context: Context, message: String) {
@@ -86,8 +94,64 @@ fun RootAppNavigation (
 
 
         composable(Routes.Main.route) {
-            // TBD.
+            MainScreen(
+                onNavigateToProduct = {
+                    navController.navigate(route = Routes.Product.getProductById(it))
+                },
+                onNavigateToNotifications = {
+                    navController.navigate(route = Routes.Notifications.route)
+                },
+                onNavigateToConfirmation = {
+                    navController.navigate(route = Routes.Confirmation.route)
+                },
+                onChangeFavourite = {
+
+                }
+            )
         }
+
+        composable(Routes.Product.route){
+            val viewModel = hiltViewModel<ProductViewModel>()
+            val id = it.arguments?.getString(Routes.PRODUCT_ID)?.toLong()?: -1L
+            ProductScreen(
+                viewModel = viewModel,
+                id = id,
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onBuyNowClick = {
+                    navController.navigate(Routes.Cart.route)
+                }
+            )
+        }
+
+        composable(Routes.Cart.route){
+            val viewModel = hiltViewModel<CartViewModel>()
+            CartScreen(
+                viewModel = viewModel,
+                onNavigateToConfirm = {},
+                onNavigateToProduct = {}
+
+            )
+        }
+
+        composable(Routes.Confirmation.route){
+            val viewModel = hiltViewModel<ConfirmViewModel>()
+
+            ConfirmScreen(
+                viewModel = viewModel,
+                onNavigateToSuccess = {
+                    navController.navigate(Routes.Success.route)
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                }
+
+            )
+        }
+
+
+
     }
 
 

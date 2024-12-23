@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.first.android_coffee_prystore.R
@@ -55,6 +56,7 @@ val navBackStackEntry by navController.currentBackStackEntryAsState()
                                 contentDescription = null
                             )
                         },
+                        /*
                         label = {
                             Text(
                                 stringResource(
@@ -68,8 +70,18 @@ val navBackStackEntry by navController.currentBackStackEntryAsState()
 
                             )
                                  },
+
+                         */
                         selected = currentDestination?.hierarchy?.any{it.route == graph.route} == true,
-                        onClick = { TODO() }
+                        onClick = {
+                            navController.navigate(graph.route){
+                                popUpTo(navController.graph.findStartDestination().id){
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
 
                     )
                 }

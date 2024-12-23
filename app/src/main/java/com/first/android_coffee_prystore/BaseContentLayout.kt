@@ -1,21 +1,20 @@
 package com.first.android_coffee_prystore
 
-import android.app.Dialog
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 
-import androidx.compose.runtime.getValue
-
 import androidx.compose.ui.Modifier
+import com.first.android_coffee_prystore.prototype.ProductViewModel
 
 
 @Composable
 fun BaseContentLayout(
     onBackPressed: (() -> Unit)?,
-    content: @Composable () -> Unit
+    content: @Composable (Any?) -> Unit,
+    viewModel: ProductViewModel
 ) {
     // Handle back press if provided
     if (onBackPressed != null) {

@@ -1,6 +1,6 @@
 package com.first.android_coffee_prystore
 
-import android.app.Dialog
+
 import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.compose.runtime.State
@@ -40,6 +40,8 @@ abstract class BaseViewModel<S : AppUiState, P : Progress, D : Dialog, C : Callb
             _eventState.value = _eventState.value.copy(progress = null)
         }
     }
+
+
 
 }
 data class ProgressData<P : Progress>(
