@@ -3,6 +3,7 @@ package com.first.android_coffee_prystore
 
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.first.android_coffee_prystore.pages.app.notifications.Notification
+import com.first.android_coffee_prystore.prototype.ProductDetails
 import com.google.android.gms.analytics.ecommerce.Product
 
 data class Notification(val id: Int, val message: String) {
@@ -96,6 +97,18 @@ object MockUtils {
 
     fun isProductInCart(id: Long) {
 
+    }
+
+    fun loadMockFavourites() {
+
+    }
+
+    fun loadMockProductsInCart() {
+        TODO("Not yet implemented")
+    }
+
+    fun loadMockProductPrices() {
+        TODO("Not yet implemented")
     }
 }
 /*

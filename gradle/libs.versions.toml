@@ -76,6 +76,8 @@ storage = "1.4.2"
 composeMaterial = "1.4.0"
 materialAndroid = "1.6.0"
 uiTestAndroid = "1.7.0"
+billingKtx = "7.1.1"
+accessibilityTestFramework = "3.1.2"
 
 
 [libraries]
@@ -171,6 +173,8 @@ androidx-storage = { group = "androidx.test.services", name = "storage", version
 androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
 androidx-material-android = { group = "androidx.compose.material", name = "material-android", version.ref = "materialAndroid" }
 androidx-ui-test-android = { group = "androidx.compose.ui", name = "ui-test-android", version.ref = "uiTestAndroid" }
+billing-ktx = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billingKtx" }
+accessibility-test-framework = { group = "com.google.android.apps.common.testing.accessibility.framework", name = "accessibility-test-framework", version.ref = "accessibilityTestFramework" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }

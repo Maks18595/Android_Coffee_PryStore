@@ -62,6 +62,8 @@ dependencies {
     implementation(libs.androidx.material.android)
     implementation(libs.androidx.material.android)
     implementation(libs.androidx.ui.test.android)
+    implementation(libs.billing.ktx)
+    implementation(libs.accessibility.test.framework)
     ksp(libs.room.compiler)
     implementation(libs.androidx.lifecycle.runtimeCompose)
     implementation(libs.androidx.lifecycle.viewModelCompose)

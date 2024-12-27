@@ -7,14 +7,14 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 
 import androidx.compose.ui.Modifier
-import com.first.android_coffee_prystore.prototype.ProductViewModel
+import com.first.android_coffee_prystore.pages.app.notifications.NotificationsViewModel
 
 
 @Composable
 fun BaseContentLayout(
     onBackPressed: (() -> Unit)?,
     content: @Composable (Any?) -> Unit,
-    viewModel: ProductViewModel
+    viewModel: NotificationsViewModel
 ) {
     // Handle back press if provided
     if (onBackPressed != null) {

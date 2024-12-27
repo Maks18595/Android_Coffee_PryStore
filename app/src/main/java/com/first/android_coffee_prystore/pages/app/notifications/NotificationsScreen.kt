@@ -17,6 +17,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -35,6 +37,17 @@ import com.first.android_coffee_prystore.BaseContentLayout
 import com.first.android_coffee_prystore.MockUtils
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import com.first.android_coffee_prystore.DotIndicator
+import com.first.android_coffee_prystore.R
+import com.first.android_coffee_prystore.core.components.NotificationTitle
+import com.first.android_coffee_prystore.core.components.ProductDescription
+import com.first.android_coffee_prystore.core.components.ProductSquareImage
+import com.first.android_coffee_prystore.core.components.ProductTitle
+import com.first.android_coffee_prystore.core.components.ToolbarLayout
+import com.first.android_coffee_prystore.core.components.ToolbarMenuIcon
+import com.first.android_coffee_prystore.core.components.ToolbarTitle
+import com.first.android_coffee_prystore.core.components.TopAppBar
 
 
 //import android.graphics.Color
@@ -70,7 +83,20 @@ private fun NotificationsScreenContent(
     onBackClick: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
-        // Список повідомлень
+
+        ToolbarLayout {
+            ToolbarTitle(
+                title = stringResource(id = R.string.notifications)
+            )
+            ToolbarMenuIcon(
+                modifier = Modifier,
+                icon = Icons.Default.Check,
+                onClick = { uiEvent(NotificationsUiEvent.OnMarkAllAsReadClick) }
+            )
+        }
+
+
+
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(
@@ -109,6 +135,15 @@ private fun NotificationCard(
                     }
                     .padding(8.dp)
             ) {
+                Box(
+                    modifier = Modifier.size(80.dp).clip(RoundedCornerShape(12.dp))
+                )
+                {
+                    ProductSquareImage(
+                        imageUrl = notification.image
+                    )
+                }
+                /*
                 Image(
                     painter = rememberAsyncImagePainter(notification.image),
                     contentDescription = null,
@@ -118,12 +153,19 @@ private fun NotificationCard(
                         .clip(CircleShape)
                         .align(Alignment.CenterVertically)
                 )
+
+                 */
                 Column(
                     modifier = Modifier
                         .align(Alignment.Top)
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp)
                 ) {
+                    ProductTitle(
+                        modifier = Modifier,
+                        title = notification.title
+                    )
+                    /*
                     Text(
                         text = notification.title,
                         style = MaterialTheme.typography.bodyLarge,
@@ -131,6 +173,10 @@ private fun NotificationCard(
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )
+
+                     */
+                    ProductDescription(description = notification.description, maxLines = 3)
+                    /*
                     Text(
                         text = notification.description,
                         style = MaterialTheme.typography.bodySmall,
@@ -138,9 +184,12 @@ private fun NotificationCard(
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 3
                     )
+
+                     */
                 }
             }
             if (notification.isNew) {
+                DotIndicator(color = Color.Gray)
                 Canvas(
                     modifier = Modifier
                         .padding(8.dp)

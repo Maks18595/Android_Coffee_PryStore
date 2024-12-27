@@ -1,6 +1,5 @@
 package com.first.android_coffee_prystore.prototype
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -39,8 +38,6 @@ import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,13 +51,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.first.android_coffee_prystore.BaseContentLayout
 import com.first.android_coffee_prystore.MockUtils
 import com.first.android_coffee_prystore.R
-import com.first.android_coffee_prystore.UiEvent
-import com.first.android_coffee_prystore.confirm.Content
 import com.first.android_coffee_prystore.core.components.PrimaryButton
-import com.first.android_coffee_prystore.navigation.Routes
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch // Додано
-
 
 
 @Composable
@@ -290,31 +282,6 @@ fun ProductTitle(title: String) {
 
 }
 
-@Composable
-private fun DotIndicator(pageCount: Any, pagerState: Any) {
- Row(
-     horizontalArrangement = Arrangement.Center,
-     modifier = Modifier
-         .height(50.dp)
-         .fillMaxWidth()
-         .padding(top = 8.dp)
- ){
- repeat(pageCount){
-     iteration ->
-     Box(
-         modifier = Modifier
-             .padding(4.dp)
-             .clip(CircleShape)
-             .background(color = if (pagerState.currentPage == iteration){
-                 Color.Gray
-             } else {
-                 Color.Gray.copy(alpha = 0.5f)
-             })
-             .size(12.dp)
-     )
- }
- }
-}
 
 
 

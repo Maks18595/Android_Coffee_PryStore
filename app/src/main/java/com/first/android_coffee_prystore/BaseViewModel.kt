@@ -43,6 +43,7 @@ abstract class BaseViewModel<S : AppUiState, P : Progress, D : Dialog, C : Callb
 
 
 
+
 }
 data class ProgressData<P : Progress>(
     val progress: P? = null

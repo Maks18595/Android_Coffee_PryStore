@@ -7,39 +7,33 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
-import androidx.compose.material3.Text
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
 import com.first.android_coffee_prystore.BaseContentLayout
 import com.first.android_coffee_prystore.Product
 import com.first.android_coffee_prystore.core.components.SearchCategories
 import com.first.android_coffee_prystore.core.components.ToolbarTitle
 
-import androidx.compose.foundation.Image
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedIconToggleButton
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.sp
+import com.first.android_coffee_prystore.core.components.ProductPrice
+import com.first.android_coffee_prystore.core.components.ProductSquareImage
+import com.first.android_coffee_prystore.core.components.ProductTitle
+import com.first.android_coffee_prystore.core.components.ToolbarLayout
+import com.first.android_coffee_prystore.core.components.ToolbarMenuIcon
+import com.first.android_coffee_prystore.core.components.FavouriteButton
 
 
 @Composable
@@ -72,23 +66,38 @@ fun FeedScreen(
                 )
             }
         },
-        viewModel // Якщо обробка "Назад" не потрібна
+        viewModel
     )
 }
 
 @Composable
 private fun FeedScreenContent(
-    products: List<Product>, // Приймаємо список продуктів
+    products: List<Product>,
     searchCategories: () -> Unit,
     onNavigateToNotifications: () -> Unit,
     onNavigateToProduct: (Long) -> Unit,
     onNavigateToSearch: () -> Unit
 ) {
     Column {
-        ToolbarTitle(title = "Feed")
-        SearchCategories(tags = searchCategories, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+        ToolbarLayout (
+            modifier = Modifier.fillMaxWidth(),
+            content = {
+            ToolbarTitle(title = "Feed")
+ ToolbarMenuIcon(
+     modifier = Modifier,
+     icon = Icons.Filled.Notifications,
+     onClick = { onNavigateToNotifications() }
+ )
 
-        // Використовуємо LazyVerticalGrid для відображення продуктів
+
+        }
+        )
+
+            SearchCategories(
+                tags = searchCategories,
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            )
+
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier
@@ -125,65 +134,28 @@ Column {
                 .fillMaxWidth()
                 .height(180.dp)
         ) {
-            Image(
-                alignment = Alignment.TopEnd,
-                painter = rememberAsyncImagePainter(model = product.imageUrl),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth().clip(RectangleShape)
-            )
-            val isFavourite by remember { mutableStateOf(product.isFavourite)}
+ ProductSquareImage(imageUrl = product.imageUrl)
+            val isFavourite by remember { mutableStateOf(product.isFavourite) }
+ FavouriteButton(isFavourite)
 
-            Box(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.TopEnd)
-            ){
-                OutlinedIconToggleButton(
-                    checked = isFavourite,
-                    onCheckedChange = {}
-                ){
-Icon(
-    modifier = Modifier.size(22.dp),
-    imageVector = Icons.Default.Favorite,
-    contentDescription = null
-)
                 }
             }
-        }
-    }
 
-    ProductItemTitle(title = product.title)
-
-    ProductItemPrice(price = product.price)
-
-}
-}
-
-@Composable
-private fun ProductItemTitle(title: String) {
-    Text(
-        text = title,
-        style = MaterialTheme.typography.titleMedium,
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
-        modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp)
+    ProductTitle(
+        modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp),
+        title = product.title,
     )
+    ProductPrice(
+        modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp),
+        price = product.price,
+        style = MaterialTheme.typography.titleSmall
+        )
+
+}
 }
 
 
-@Composable
-private fun ProductItemPrice(price: Double){
-    Text(
-        text = "\$$price",
-        style = MaterialTheme.typography.titleSmall,
-        maxLines = 1,
-        color = Color.Gray,
-        fontSize = 12.sp,
-        overflow = TextOverflow.Ellipsis,
-        modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 8.dp)
-    )
-}
+
 
 @Preview(showSystemUi = true)
 @Composable
